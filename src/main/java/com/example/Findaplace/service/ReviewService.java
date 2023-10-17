@@ -33,12 +33,12 @@ public class ReviewService {
 
     public List<Review> getActivities(long id){
         List<Users> listFollower = userDao.findFollowers(id);
-        List<List<Review>> listReviewFromFollowedUser = new ArrayList<>();
+        List<List<Review>> listReviewFromFollowerUser = new ArrayList<>();
         for (Users follower : listFollower) {
-            listReviewFromFollowedUser.add(reviewDAO.findAllByUserId(follower.getId()));
+            listReviewFromFollowerUser.add(reviewDAO.findAllByUserId(follower.getId()));
         }
         List<Review> activities = new ArrayList<>();
-        for (List<Review> sousListe : listReviewFromFollowedUser) {
+        for (List<Review> sousListe : listReviewFromFollowerUser) {
             activities.addAll(sousListe);
         }
         return activities;
