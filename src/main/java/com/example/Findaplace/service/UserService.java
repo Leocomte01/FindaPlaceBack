@@ -20,6 +20,9 @@ public class UserService {
         return userDao.getById(id);
     }
 
+    public Users getConnexion(String user_name, String mdp){return userDao.getConnexion(user_name,mdp)
+            .orElseThrow(RuntimeException::new);}
+
     public Users getByUserName(String userName){
         return userDao.getByUserName(userName);
     }

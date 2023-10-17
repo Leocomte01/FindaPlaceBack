@@ -32,6 +32,10 @@ public class ReviewController {
         return reviewService.getById(id);
     }
 
+    //il faut mettre l'id de l'utilisateur connecté
+    @GetMapping("/activities/{id}")
+    public List<Review> getActivities(@PathVariable Long id){return reviewService.getActivities(id);}
+
     @PostMapping("")
     public void addUser(@RequestBody Review review) {
         reviewService.addReview(review);

@@ -25,6 +25,11 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @GetMapping("/{user_name}/{mdp}")
+    public Users getConnexion(@PathVariable String user_name, @PathVariable String mdp){
+        return userService.getConnexion(user_name, mdp);
+    }
+
 
     @GetMapping("/username/{user_name}")
     public Users getUserByUserName(@PathVariable String user_name) {
@@ -37,10 +42,14 @@ public class UserController {
     }
 
 
+    //récupère les personnes que le user dont on donne l'id suit
+    //qui user{id} suit
     @GetMapping("/followers/{id}")
     public List<Users> getAllFollowers(@PathVariable Long id) {
         return userService.findFollowersByUserId(id);}
 
+    //recupère les followers du user dont on donne l'id
+    //quel user suit {id}
     @GetMapping("/following/{id}")
     public List<Users> getAllFollowingUsers(@PathVariable Long id) {
         return userService.findFollowingByUserId(id);}

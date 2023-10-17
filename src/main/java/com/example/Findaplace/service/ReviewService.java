@@ -5,8 +5,10 @@ import com.example.Findaplace.DAO.UserDao;
 import com.example.Findaplace.model.Review;
 import com.example.Findaplace.model.Users;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -14,7 +16,7 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewDAO reviewDAO;
-
+    private final UserDao userDao;
     public List<Review> findAll(){
         return reviewDAO.findAll();
     }
@@ -27,7 +29,19 @@ public class ReviewService {
 
     public void updateById(Long id){
         Review review = reviewDAO.findById(id).get();
+    }
 
+    public List<Review> getActivities(long id){
+        List<Users> listFollower = userDao.findFollowers(id);
+        List<List<Review>> listReviewFromFollowedUser = new ArrayList<>();
+        for (Users follower : listFollower) {
+            listReviewFromFollowedUser.add(reviewDAO.findAllByUserId(follower.getId()));
+        }
+        List<Review> activities = new ArrayList<>();
+        for (List<Review> sousListe : listReviewFromFollowedUser) {
+            activities.addAll(sousListe);
+        }
+        return activities;
     }
 
     public Review getById(Long id){
