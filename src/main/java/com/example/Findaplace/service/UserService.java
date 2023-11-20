@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -16,8 +17,8 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public Users getById(Long id){
-        return userDao.getById(id);
+    public Optional<Users> getById(Long id){
+        return userDao.findById(id);
     }
 
     public Users getConnexion(String user_name, String mdp){return userDao.getConnexion(user_name,mdp)
