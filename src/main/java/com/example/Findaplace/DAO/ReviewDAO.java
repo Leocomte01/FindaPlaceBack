@@ -16,4 +16,9 @@ public interface ReviewDAO extends JpaRepository<Review, Long> {
             "WHERE u.id =:id")
     List<Review> findAllByUserId(Long id);
 
+    @Query("SELECT r FROM Review r " +
+            "JOIN r.place p " +
+            "WHERE p.id =:id")
+    List<Review> findAllByPlaceId(Long id);
+
 }

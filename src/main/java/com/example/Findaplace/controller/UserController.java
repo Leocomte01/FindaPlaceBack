@@ -16,16 +16,19 @@ public class UserController {
 
     private final UserService userService;
 
+    @ResponseBody
     @GetMapping("")
     public List<Users> getAllUsers() {
         return userService.findAll();
     }
 
+    @ResponseBody
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable Long id) {
-        return userService.getById(id);
+        return userService.findById(id);
     }
 
+    @ResponseBody
     @GetMapping("/{user_name}/{mdp}")
     public Users getConnexion(@PathVariable String user_name, @PathVariable String mdp){
         return userService.getConnexion(user_name, mdp);

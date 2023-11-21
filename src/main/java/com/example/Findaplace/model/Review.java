@@ -34,12 +34,13 @@ public class Review {
     @Column
     private Date date_publication;
 
-    @Column(length = 1000)
-    private String id_place_google;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
     private Users users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
@@ -48,4 +49,15 @@ public class Review {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tags> tags = new HashSet<>();
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", rate=" + rate +
+                ", date_publication=" + date_publication +
+                ", users=" + users +
+                ", place=" + place +
+                '}';
+    }
 }

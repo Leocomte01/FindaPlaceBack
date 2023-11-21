@@ -1,13 +1,17 @@
 package com.example.Findaplace.controller;
 
 import com.example.Findaplace.model.Review;
-import com.example.Findaplace.model.Users;
 import com.example.Findaplace.service.ReviewService;
-import com.example.Findaplace.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.http11.upgrade.UpgradeProcessorExternal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -17,30 +21,49 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+
+    @ResponseBody
     @GetMapping("")
     public List<Review> getAllReviews() {
         return reviewService.findAll();
     }
 
+    @ResponseBody
     @GetMapping("/user/{id}")
     public List<Review> getAllReviewsByUserId(@PathVariable Long id) {
         return reviewService.findAllByUserId(id);
     }
 
+    @ResponseBody
+    @GetMapping("/place/{id}")
+    public List<Review> getAllReviewsByPlaceId(@PathVariable Long id) {
+        return reviewService.findAllByPlaceId(id);
+    }
+
+    @ResponseBody
     @GetMapping("/{id}")
-    public Review getReviewById(@PathVariable Long id) {
-        return reviewService.getById(id);
+    public Optional<Review> getReviewById(@PathVariable Long id) {
+        return reviewService.findById(id);
     }
 
     //il faut mettre l'id de l'utilisateur connecté
+    @ResponseBody
     @GetMapping("/activities/{id}")
     public List<Review> getActivities(@PathVariable Long id){return reviewService.getActivities(id);}
 
     @PostMapping("")
-    public void addUser(@RequestBody Review review) {
-        reviewService.addReview(review);
+    public ResponseEntity<?> addPlace(@RequestBody Review review) {
+        try {
+            reviewService.addReview(review);
+            return ResponseEntity.ok().build(); // Return 200 OK for success
+        } catch (Exception e) {
+            logger.error("Error adding place", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
+        }
     }
 
+    @ResponseBody
     @DeleteMapping("/{id}")
     public void deleteReview(@PathVariable Long id) {
         reviewService.deleteById(id);

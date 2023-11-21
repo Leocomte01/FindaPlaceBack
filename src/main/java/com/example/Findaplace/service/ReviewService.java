@@ -5,11 +5,11 @@ import com.example.Findaplace.DAO.UserDao;
 import com.example.Findaplace.model.Review;
 import com.example.Findaplace.model.Users;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +23,10 @@ public class ReviewService {
 
     public List<Review> findAllByUserId(Long id){
         return reviewDAO.findAllByUserId(id);
+    }
+
+    public List<Review> findAllByPlaceId(Long id){
+        return reviewDAO.findAllByPlaceId(id);
     }
 
     public void deleteById(Long id) { reviewDAO.deleteById(id);}
@@ -44,8 +48,8 @@ public class ReviewService {
         return activities;
     }
 
-    public Review getById(Long id){
-        return reviewDAO.getById(id);
+    public Optional<Review> findById(Long id){
+        return reviewDAO.findById(id);
     }
 
     public void addReview(Review review){

@@ -14,6 +14,7 @@ public class FollowingRelationController {
 
     private final FollowingRelationService followingRelationService;
 
+    @ResponseBody
     @PostMapping("")
             public void addRelation(@RequestParam("follower") Long followerId, @RequestParam("followed") Long followedId){
         followingRelationService.addRelation(followerId, followedId);

@@ -8,12 +8,23 @@ create table users
     email TEXT not null
 );
 
+create table place
+(
+    id SERIAL PRIMARY KEY,
+    id_place_google TEXT not null,
+    name TEXT not null,
+    address TEXT not null,
+    location TEXT not null,
+    images TEXT,
+    icon TEXT
+);
+
 create table review
 (
     id SERIAL PRIMARY KEY,
     comment Text,
-    rate int not null,
-    id_place_google TEXT not null,
+    rate int,
+    place_id int not null,
     date_publication DATE ,
     users_id int not null
 );
@@ -37,4 +48,3 @@ create table following_relation
     follower_id  int,
     following_id int
 )
-
