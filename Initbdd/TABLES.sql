@@ -18,6 +18,19 @@ create table review
     users_id int not null
 );
 
+create table tags
+(
+    id      SERIAL PRIMARY KEY,
+    name Text,
+    color Text
+);
+
+create table review_tag
+(
+    review_id int,
+    tag_id int
+);
+
 create table following_relation
 (
     id SERIAL PRIMARY KEY,
