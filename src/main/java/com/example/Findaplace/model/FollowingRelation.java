@@ -2,6 +2,7 @@ package com.example.Findaplace.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Entity
 @Table(name= "following_relation")
@@ -10,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@EnableTransactionManagement
 public class FollowingRelation {
 
     @Id

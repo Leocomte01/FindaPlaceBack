@@ -19,4 +19,9 @@ public class FollowingRelationController {
             public void addRelation(@RequestParam("follower") Long followerId, @RequestParam("followed") Long followedId){
         followingRelationService.addRelation(followerId, followedId);
     }
+
+    @DeleteMapping("")
+    public void deleteRelation(@RequestParam("follower") Long followerId, @RequestParam("followed") Long followedId){
+        followingRelationService.deleteRelation(followerId, followedId);
+    }
 }

@@ -26,9 +26,11 @@ public class FollowingRelationService {
 
         followingRelationDAO.save(followingRelation);
     }
-/*
-    public FollowingRelation addRelation2(FollowingRelation followingRelation){
-        return followingRelationDAO.save(followingRelation);
-    }*/
+
+    public void deleteRelation(Long followerId, Long followedId){
+        Users follower =  userDao.findById(followerId).get();
+        Users followed =  userDao.findById(followedId).get();
+        followingRelationDAO.deleteByFollowerAndFollowing(follower, followed);
+    }
 
 }
