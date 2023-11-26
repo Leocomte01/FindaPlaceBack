@@ -34,11 +34,11 @@ public class Review {
     @Column
     private Date date_publication;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "users_id")
     private Users users;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "place_id")
     private Place place;
 

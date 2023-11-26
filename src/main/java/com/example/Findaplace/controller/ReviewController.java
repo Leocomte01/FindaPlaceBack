@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,12 +54,12 @@ public class ReviewController {
     public List<Review> getActivities(@PathVariable Long id){return reviewService.getActivities(id);}
 
     @PostMapping("")
-    public ResponseEntity<?> addPlace(@RequestBody Review review) {
+    public ResponseEntity<?> addReview(@RequestBody Review review) {
         try {
             reviewService.addReview(review);
             return ResponseEntity.ok().build(); // Return 200 OK for success
         } catch (Exception e) {
-            logger.error("Error adding place", e);
+            logger.error("Error adding review", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
         }
     }
@@ -70,5 +71,18 @@ public class ReviewController {
     }
 
     @PatchMapping("/{id}")
-    public void updateReview(@PathVariable Long id){ reviewService.updateById(id);}
+    public ResponseEntity<?> updateReview(@PathVariable Long id,
+                                          @RequestBody Review review) {
+        try {
+            Optional<Review> optionalReview = reviewService.findById(id);
+            if (optionalReview.isPresent()) {
+                Review reviewFound = review;
+            }
+            reviewService.updateById(id);
+            return ResponseEntity.ok().build(); // Return 200 OK for success
+        } catch (Exception e) {
+            logger.error("Error updating review", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
+        }
+    }
 }
