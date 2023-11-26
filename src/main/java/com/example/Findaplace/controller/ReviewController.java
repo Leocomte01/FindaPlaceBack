@@ -43,6 +43,13 @@ public class ReviewController {
     }
 
     @ResponseBody
+    @GetMapping("/place/{placeId}/user/{userId}")
+    public Review getReviewForPlaceAndUser(@PathVariable Long placeId, @PathVariable Long userId) {
+        Optional<Review> optionalReview = reviewService.findReviewByPlaceAndUser(placeId, userId);
+        return optionalReview.orElse(null);
+    }
+
+    @ResponseBody
     @GetMapping("/{id}")
     public Optional<Review> getReviewById(@PathVariable Long id) {
         return reviewService.findById(id);

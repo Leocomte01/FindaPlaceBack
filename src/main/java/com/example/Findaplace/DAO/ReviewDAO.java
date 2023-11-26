@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewDAO extends JpaRepository<Review, Long> {
@@ -20,5 +21,10 @@ public interface ReviewDAO extends JpaRepository<Review, Long> {
             "JOIN r.place p " +
             "WHERE p.id =:id")
     List<Review> findAllByPlaceId(Long id);
+
+    @Query("SELECT r FROM Review r " +
+            "WHERE r.place.id =:placeId " +
+            "AND r.users.id =:userId")
+    Optional<Review> findReviewForPlaceAndUser(Long placeId, Long userId);
 
 }
