@@ -29,6 +29,10 @@ public class ReviewService {
         return reviewDAO.findAllByPlaceId(id);
     }
 
+    public Optional<Review> findReviewByPlaceAndUser(Long placeId, Long userId) {
+        return reviewDAO.findReviewForPlaceAndUser(placeId, userId);
+    }
+
     public void deleteById(Long id) { reviewDAO.deleteById(id);}
 
     public void updateById(Long id){
