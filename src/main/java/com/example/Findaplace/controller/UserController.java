@@ -32,7 +32,7 @@ public class UserController {
 
     // Endpoint pour gérer la connexion d'un utilisateur
     @ResponseBody
-    @GetMapping("/{user_name}/{mdp}")
+    @GetMapping(value = "/{user_name}/{mdp}", produces = "application/json")
     public Users getConnexion(@PathVariable String user_name, @PathVariable String mdp) {
         return userService.getConnexion(user_name, mdp);
     }
