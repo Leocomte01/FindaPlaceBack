@@ -21,40 +21,48 @@ public class PlaceController {
 
     private static final Logger logger = LoggerFactory.getLogger(PlaceController.class);
 
+    // Endpoint pour récupérer tous les lieux
     @ResponseBody
     @GetMapping("")
     public List<Place> getAllReviews() {
         return placeService.findAll();
     }
 
+    // Endpoint pour récupérer un lieu par son ID Google
     @ResponseBody
     @GetMapping("/google/{id}")
     public Place findPlaceByGoogleId(@PathVariable String id) {
         return placeService.findPlaceByGoogleId(id);
     }
 
+    // Endpoint pour récupérer un lieu par son ID
     @ResponseBody
     @GetMapping("/{id}")
     public Optional<Place> findPlaceById(@PathVariable Long id) {
         return placeService.findById(id);
     }
 
+    // Endpoint pour ajouter un nouveau lieu
     @PostMapping("")
     public ResponseEntity<?> addPlace(@RequestBody Place place) {
         try {
             placeService.addPlace(place);
-            return ResponseEntity.ok().build(); // Return 200 OK for success
+            return ResponseEntity.ok().build(); // Retourne 200 OK pour le succès
         } catch (Exception e) {
             logger.error("Error adding place", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
         }
     }
 
+    // Endpoint pour supprimer un lieu par son ID
     @DeleteMapping("/{id}")
     public void deletePlace(@PathVariable Long id) {
         placeService.deleteById(id);
     }
 
+    // Endpoint pour mettre à jour un lieu par son ID
     @PatchMapping("/{id}")
-    public void updatePlace(@PathVariable Long id){ placeService.updateById(id);}
+    public void updatePlace(@PathVariable Long id) {
+        placeService.updateById(id);
+    }
 }

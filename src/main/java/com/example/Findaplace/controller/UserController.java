@@ -16,48 +16,48 @@ public class UserController {
 
     private final UserService userService;
 
+    // Endpoint pour récupérer tous les utilisateurs
     @ResponseBody
     @GetMapping("")
     public List<Users> getAllUsers() {
         return userService.findAll();
     }
 
+    // Endpoint pour récupérer un utilisateur par son ID
     @ResponseBody
     @GetMapping("/{id}")
     public Optional<Users> getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
+    // Endpoint pour gérer la connexion d'un utilisateur
     @ResponseBody
     @GetMapping("/{user_name}/{mdp}")
-    public Users getConnexion(@PathVariable String user_name, @PathVariable String mdp){
+    public Users getConnexion(@PathVariable String user_name, @PathVariable String mdp) {
         return userService.getConnexion(user_name, mdp);
     }
 
-
+    // Endpoint pour récupérer un utilisateur par son nom d'utilisateur
     @GetMapping("/username/{user_name}")
     public Users getUserByUserName(@PathVariable String user_name) {
         return userService.getByUserName(user_name);
     }
 
+    // Endpoint pour ajouter un nouvel utilisateur
     @PostMapping("")
     public void addUser(@RequestBody Users users) {
         userService.addUser(users);
     }
 
-
-    //récupère les personnes que le user dont on donne l'id suit
-    //qui user{id} suit
+    // Endpoint pour récupérer tous les followers d'un utilisateur par son ID
     @GetMapping("/followers/{id}")
     public List<Users> getAllFollowers(@PathVariable Long id) {
-        return userService.findFollowersByUserId(id);}
+        return userService.findFollowersByUserId(id);
+    }
 
-    //recupère les followers du user dont on donne l'id
-    //quel user suit {id}
+    // Endpoint pour récupérer tous les utilisateurs suivis par un utilisateur par son ID
     @GetMapping("/following/{id}")
     public List<Users> getAllFollowingUsers(@PathVariable Long id) {
-        return userService.findFollowingByUserId(id);}
-
-
-
+        return userService.findFollowingByUserId(id);
+    }
 }

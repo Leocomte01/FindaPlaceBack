@@ -16,16 +16,21 @@ import java.util.Set;
 @Setter
 public class Tags {
 
+    // Identifiant du tag, généré automatiquement
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 3000)
+    // Nom du tag
+    @Column(length = 1000)
     private String name;
 
+    // Couleur associée au tag
     @Column
     private String color;
 
+    // Relation Many-to-Many avec la classe Review
+    // Chaque Review peut avoir plusieurs tags et chaque tag peut être associé à plusieurs reviews
     @ManyToMany(mappedBy = "tags")
     @JsonIgnore
     private Set<Review> reviews = new HashSet<>();

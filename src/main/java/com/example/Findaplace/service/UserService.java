@@ -13,32 +13,39 @@ import java.util.Optional;
 public class UserService {
     private final UserDao userDao;
 
-    public List<Users> findAll(){
+    // Méthode pour récupérer tous les utilisateurs
+    public List<Users> findAll() {
         return userDao.findAll();
     }
 
-    public Optional<Users> findById(Long id){
+    // Méthode pour récupérer un utilisateur par son ID
+    public Optional<Users> findById(Long id) {
         return userDao.findById(id);
     }
 
-    public Users getConnexion(String user_name, String mdp){return userDao.getConnexion(user_name,mdp)
-            .orElseThrow(RuntimeException::new);}
+    // Méthode pour gérer la connexion d'un utilisateur
+    public Users getConnexion(String user_name, String mdp) {
+        return userDao.getConnexion(user_name, mdp)
+                .orElseThrow(RuntimeException::new);
+    }
 
-    public Users getByUserName(String userName){
+    // Méthode pour récupérer un utilisateur par son pseudo
+    public Users getByUserName(String userName) {
         return userDao.getByUserName(userName);
     }
 
-    public void addUser(Users users){
+    // Méthode pour ajouter un nouvel utilisateur
+    public void addUser(Users users) {
         userDao.save(users);
     }
 
-    public List<Users> findFollowersByUserId(Long id){
-       return userDao.findFollowers(id);
+    // Méthode pour récupérer la liste des utilisateurs qui suivent l'utilisateur avec l'ID spécifié
+    public List<Users> findFollowersByUserId(Long id) {
+        return userDao.findFollowers(id);
     }
 
-    public List<Users> findFollowingByUserId(Long id){
+    // Méthode pour récupérer la liste des utilisateurs suivis par l'utilisateur avec l'ID spécifié
+    public List<Users> findFollowingByUserId(Long id) {
         return userDao.findFollowingUsers(id);
     }
-
-
 }

@@ -15,25 +15,34 @@ public class PlaceService {
 
     private final PlaceDao placeDao;
     private final UserDao userDao;
-    public List<Place> findAll(){
+
+    // Méthode pour récupérer tous les lieux
+    public List<Place> findAll() {
         return placeDao.findAll();
     }
 
-    public Place findPlaceByGoogleId(String id){
+    // Méthode pour récupérer un lieu par son identifiant Google
+    public Place findPlaceByGoogleId(String id) {
         return placeDao.findPlaceByGoogleId(id);
     }
 
-    public void deleteById(Long id) { placeDao.deleteById(id);}
-
-    public void updateById(Long id){
-        Place place = placeDao.findById(id).get();
+    // Méthode pour supprimer un lieu par son ID
+    public void deleteById(Long id) {
+        placeDao.deleteById(id);
     }
 
-    public Optional<Place> findById(Long id){
+    // Méthode pour mettre à jour un lieu par son ID
+    public void updateById(Long id) {
+        Place place = placeDao.findById(id).orElse(null);
+    }
+
+    // Méthode pour récupérer un lieu par son ID
+    public Optional<Place> findById(Long id) {
         return placeDao.findById(id);
     }
 
-    public void addPlace(Place place){
+    // Méthode pour ajouter un nouveau lieu (si un lieu avec le même identifiant Google n'existe pas déjà)
+    public void addPlace(Place place) {
         if (placeDao.findPlaceByGoogleId(place.getId_place_google()) == null) {
             placeDao.save(place);
         }

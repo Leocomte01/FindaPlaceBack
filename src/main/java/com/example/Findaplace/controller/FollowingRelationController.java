@@ -14,9 +14,10 @@ public class FollowingRelationController {
 
     private final FollowingRelationService followingRelationService;
 
+    // Endpoint pour ajouter une relation de suivi entre deux utilisateurs
     @ResponseBody
     @PostMapping("")
-            public void addRelation(@RequestParam("follower") Long followerId, @RequestParam("followed") Long followedId){
+    public void addRelation(@RequestParam("follower") Long followerId, @RequestParam("followed") Long followedId) {
         followingRelationService.addRelation(followerId, followedId);
     }
 

@@ -24,24 +24,28 @@ public class ReviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
+    // Endpoint pour récupérer toutes les critiques
     @ResponseBody
     @GetMapping("")
     public List<Review> getAllReviews() {
         return reviewService.findAll();
     }
 
+    // Endpoint pour récupérer toutes les critiques d'un utilisateur par son ID
     @ResponseBody
     @GetMapping("/user/{id}")
     public List<Review> getAllReviewsByUserId(@PathVariable Long id) {
         return reviewService.findAllByUserId(id);
     }
 
+    // Endpoint pour récupérer toutes les critiques d'un lieu par son ID
     @ResponseBody
     @GetMapping("/place/{id}")
     public List<Review> getAllReviewsByPlaceId(@PathVariable Long id) {
         return reviewService.findAllByPlaceId(id);
     }
 
+    // Endpoint pour récupérer une critique spécifique d'un lieu et d'un utilisateur par leurs IDs
     @ResponseBody
     @GetMapping("/place/{placeId}/user/{userId}")
     public Review getReviewForPlaceAndUser(@PathVariable Long placeId, @PathVariable Long userId) {
@@ -49,34 +53,40 @@ public class ReviewController {
         return optionalReview.orElse(null);
     }
 
+    // Endpoint pour récupérer une critique par son ID
     @ResponseBody
     @GetMapping("/{id}")
     public Optional<Review> getReviewById(@PathVariable Long id) {
         return reviewService.findById(id);
     }
 
-    //il faut mettre l'id de l'utilisateur connecté
+    // Endpoint pour récupérer les activités des utilisateurs suivis par un utilisateur spécifié par son ID
     @ResponseBody
     @GetMapping("/activities/{id}")
-    public List<Review> getActivities(@PathVariable Long id){return reviewService.getActivities(id);}
+    public List<Review> getActivities(@PathVariable Long id) {
+        return reviewService.getActivities(id);
+    }
 
+    // Endpoint pour ajouter une nouvelle critique
     @PostMapping("")
     public ResponseEntity<?> addReview(@RequestBody Review review) {
         try {
             reviewService.addReview(review);
-            return ResponseEntity.ok().build(); // Return 200 OK for success
+            return ResponseEntity.ok().build(); // Retourne 200 OK pour le succès
         } catch (Exception e) {
             logger.error("Error adding review", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding review: " + e.getMessage());
         }
     }
 
+    // Endpoint pour supprimer une critique par son ID
     @ResponseBody
     @DeleteMapping("/{id}")
     public void deleteReview(@PathVariable Long id) {
         reviewService.deleteById(id);
     }
 
+    // Endpoint pour mettre à jour une critique par son ID
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateReview(@PathVariable Long id,
                                           @RequestBody Review review) {
@@ -86,10 +96,10 @@ public class ReviewController {
                 Review reviewFound = review;
             }
             reviewService.updateById(id);
-            return ResponseEntity.ok().build(); // Return 200 OK for success
+            return ResponseEntity.ok().build(); // Retourne 200 OK pour le succès
         } catch (Exception e) {
             logger.error("Error updating review", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding place: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating review: " + e.getMessage());
         }
     }
 }
